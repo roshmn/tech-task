@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'com.book.trendyol'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.5'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    testImplementation("org.assertj:assertj-core:3.22.0")
+}
+
+processResources {
+    exclude '**/*'
+}
+
+processTestResources {
+    exclude '**/*'
+}
+
+clean.doFirst {
+    delete('./build')
+    delete('src/test/resources/reports')
+}
+
+test {
+    testLogging.showStandardStreams = true
+
+    reports {
+        junitXml.required.set(false)
+        html.outputLocation.set(file('src/test/resources/reports/' + System.currentTimeMillis()))
+    }
+
+    useTestNG()
+}
